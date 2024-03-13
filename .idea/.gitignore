@@ -8,3 +8,7 @@
 /dataSources.local.xml
 
 .idea
+/machine-learning.iml
+/misc.xml
+/modules.xml
+/vcs.xml
