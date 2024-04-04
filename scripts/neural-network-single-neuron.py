@@ -1,3 +1,7 @@
+########################################################################################
+# Single Neuron Neural Network - Fixed weights and bias
+########################################################################################
+
 # Let's assume we want to train the network to give a NOT function,
 # that is if you input 1 it returns 0, and if you input 0 it returns 1.
 import numpy as np
