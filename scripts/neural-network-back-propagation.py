@@ -127,35 +127,54 @@ def jacobian_bases_2nd_layer(x, y):
     dz2_db2 = 1
 
     # Jacobian by chain rule.
-    J = ((dc_da3 * da3_dz3).T @ dz3_da2).T * da2_dz2 * dz2_db2
+    J = (((dc_da3 * da3_dz3).T @ dz3_da2).T * da2_dz2) * dz2_db2
 
     # Average over all training examples. Because the output of J is not a dot-product
     # we need to sum over all components of J.
     return np.sum(J, axis=1, keepdims=True) / x.size
 
 
-def J_W1(x, y):
+def jacobian_weights_1st_layer(x, y):
+    # First get all the activations and weighted sums at each layer of the network.
     a0, z1, a1, z2, a2, z3, a3 = network_function(x)
-    J = 2 * (a3 - y)
-    J = J * d_sigma(z3)
-    J = (J.T @ W3).T
-    J = J * d_sigma(z2)
-    J = (J.T @ W2).T
-    J = J * d_sigma(z1)
-    J = J @ a0.T / x.size
-    return J
+
+    # Calculate partial derivatives for the third layer:
+    # dC/dW1 = dC/da3 * da3/dz3 * dz3/da2 * da2/dz2 * dz2/da1 * da1/dz1 * dz1/dW1
+    dc_da3 = 2 * (a3 - y)
+    da3_dz3 = d_sigma(z3)
+    dz3_da2 = W3
+    da2_dz2 = d_sigma(z2)
+    dz2_dW2 = W2
+    da1_dz1 = d_sigma(z1)
+    dz1_dW1 = a0
+
+    # Jacobian by chain rule.
+    J = (((((dc_da3 * da3_dz3).T @ dz3_da2).T * da2_dz2).T @ dz2_dW2).T * da1_dz1) @ dz1_dW1.T
+
+    # Average over all training examples.
+    return J / x.size
 
 
-def J_b1(x, y):
+def jacobian_biases_1st_layer(x, y):
+    # First get all the activations and weighted sums at each layer of the network.
     a0, z1, a1, z2, a2, z3, a3 = network_function(x)
-    J = 2 * (a3 - y)
-    J = J * d_sigma(z3)
-    J = (J.T @ W3).T
-    J = J * d_sigma(z2)
-    J = (J.T @ W2).T
-    J = J * d_sigma(z1)
-    J = np.sum(J, axis=1, keepdims=True) / x.size
-    return J
+
+    # Calculate partial derivatives for the third layer:
+    # dC/db1 = dC/da3 * da3/dz3 * dz3/da2 * da2/dz2 * dz2/da1 * da1/dz1 * dz1/db1
+    dc_da3 = 2 * (a3 - y)
+    da3_dz3 = d_sigma(z3)
+    dz3_da2 = W3
+    da2_dz2 = d_sigma(z2)
+    dz2_da1 = W2
+    da1_dz1 = d_sigma(z1)
+    dz1_db1 = 1
+
+    # Jacobian by chain rule.
+    J = (((((dc_da3 * da3_dz3).T @ dz3_da2).T * da2_dz2).T @ dz2_da1).T * da1_dz1) * dz1_db1
+
+    # Average over all training examples. Because the output of J is not a dot-product
+    # we need to sum over all components of J.
+    return np.sum(J, axis=1, keepdims=True) / x.size
 
 
 # Training
@@ -188,10 +207,10 @@ def plot_training(x, y, iterations=10000, aggression=3.5, noise=1):
     ax.plot(y[0], y[1], lw=1.5, color="green")
 
     while iterations >= 0:
-        j_W1 = J_W1(x, y) * (1 + np.random.randn() * noise)
+        j_W1 = jacobian_weights_1st_layer(x, y) * (1 + np.random.randn() * noise)
         j_W2 = jacobian_weights_2nd_layer(x, y) * (1 + np.random.randn() * noise)
         j_W3 = jacobian_weights_3rd_layer(x, y) * (1 + np.random.randn() * noise)
-        j_b1 = J_b1(x, y) * (1 + np.random.randn() * noise)
+        j_b1 = jacobian_biases_1st_layer(x, y) * (1 + np.random.randn() * noise)
         j_b2 = jacobian_bases_2nd_layer(x, y) * (1 + np.random.randn() * noise)
         j_b3 = jacobian_biases_3rd_layer(x, y) * (1 + np.random.randn() * noise)
 
