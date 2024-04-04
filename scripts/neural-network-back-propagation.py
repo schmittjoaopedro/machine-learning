@@ -60,10 +60,7 @@ def cost(x, y):
 # Backpropagation functions.
 # Each function calculates the Jacobian gradient of the cost function with respect to a weight or bias.
 
-def jacobian_weights_3rd_layer(x, y):
-    # First get all the activations and weighted sums at each layer of the network.
-    a0, z1, a1, z2, a2, z3, a3 = network_function(x)
-
+def jacobian_weights_3rd_layer(x, a0, z1, a1, z2, a2, z3, a3, y):
     # Calculate partial derivatives for the third layer:
     # dC/dW3 = dC/da3 * da3/dz3 * dz3/dW3
     dc_da3 = 2 * (a3 - y)
@@ -77,10 +74,7 @@ def jacobian_weights_3rd_layer(x, y):
     return J / x.size
 
 
-def jacobian_biases_3rd_layer(x, y):
-    # First get all the activations and weighted sums at each layer of the network.
-    a0, z1, a1, z2, a2, z3, a3 = network_function(x)
-
+def jacobian_biases_3rd_layer(x, a0, z1, a1, z2, a2, z3, a3, y):
     # Calculate partial derivatives for the third layer:
     # dC/db3 = dC/da3 * da3/dz3 * dz3/db3
     dc_da3 = 2 * (a3 - y)
@@ -95,10 +89,7 @@ def jacobian_biases_3rd_layer(x, y):
     return np.sum(J, axis=1, keepdims=True) / x.size
 
 
-def jacobian_weights_2nd_layer(x, y):
-    # First get all the activations and weighted sums at each layer of the network.
-    a0, z1, a1, z2, a2, z3, a3 = network_function(x)
-
+def jacobian_weights_2nd_layer(x, a0, z1, a1, z2, a2, z3, a3, y):
     # Calculate partial derivatives for the third layer:
     # dC/dW2 = dC/da3 * da3/dz3 * dz3/da2 * da2/dz2 * dz2/dW2
     dc_da3 = 2 * (a3 - y)
@@ -114,10 +105,7 @@ def jacobian_weights_2nd_layer(x, y):
     return J / x.size
 
 
-def jacobian_bases_2nd_layer(x, y):
-    # First get all the activations and weighted sums at each layer of the network.
-    a0, z1, a1, z2, a2, z3, a3 = network_function(x)
-
+def jacobian_biases_2nd_layer(x, a0, z1, a1, z2, a2, z3, a3, y):
     # Calculate partial derivatives for the third layer:
     # dC/db2 = dC/da3 * da3/dz3 * dz3/da2 * da2/dz2 * dz2/db2
     dc_da3 = 2 * (a3 - y)
@@ -134,10 +122,7 @@ def jacobian_bases_2nd_layer(x, y):
     return np.sum(J, axis=1, keepdims=True) / x.size
 
 
-def jacobian_weights_1st_layer(x, y):
-    # First get all the activations and weighted sums at each layer of the network.
-    a0, z1, a1, z2, a2, z3, a3 = network_function(x)
-
+def jacobian_weights_1st_layer(x, a0, z1, a1, z2, a2, z3, a3, y):
     # Calculate partial derivatives for the third layer:
     # dC/dW1 = dC/da3 * da3/dz3 * dz3/da2 * da2/dz2 * dz2/da1 * da1/dz1 * dz1/dW1
     dc_da3 = 2 * (a3 - y)
@@ -155,10 +140,7 @@ def jacobian_weights_1st_layer(x, y):
     return J / x.size
 
 
-def jacobian_biases_1st_layer(x, y):
-    # First get all the activations and weighted sums at each layer of the network.
-    a0, z1, a1, z2, a2, z3, a3 = network_function(x)
-
+def jacobian_biases_1st_layer(x, a0, z1, a1, z2, a2, z3, a3, y):
     # Calculate partial derivatives for the third layer:
     # dC/db1 = dC/da3 * da3/dz3 * dz3/da2 * da2/dz2 * dz2/da1 * da1/dz1 * dz1/db1
     dc_da3 = 2 * (a3 - y)
@@ -207,12 +189,13 @@ def plot_training(x, y, iterations=10000, aggression=3.5, noise=1):
     ax.plot(y[0], y[1], lw=1.5, color="green")
 
     while iterations >= 0:
-        j_W1 = jacobian_weights_1st_layer(x, y) * (1 + np.random.randn() * noise)
-        j_W2 = jacobian_weights_2nd_layer(x, y) * (1 + np.random.randn() * noise)
-        j_W3 = jacobian_weights_3rd_layer(x, y) * (1 + np.random.randn() * noise)
-        j_b1 = jacobian_biases_1st_layer(x, y) * (1 + np.random.randn() * noise)
-        j_b2 = jacobian_bases_2nd_layer(x, y) * (1 + np.random.randn() * noise)
-        j_b3 = jacobian_biases_3rd_layer(x, y) * (1 + np.random.randn() * noise)
+        a0, z1, a1, z2, a2, z3, a3 = network_function(x)
+        j_W1 = jacobian_weights_1st_layer(x, a0, z1, a1, z2, a2, z3, a3, y) * (1 + np.random.randn() * noise)
+        j_W2 = jacobian_weights_2nd_layer(x, a0, z1, a1, z2, a2, z3, a3, y) * (1 + np.random.randn() * noise)
+        j_W3 = jacobian_weights_3rd_layer(x, a0, z1, a1, z2, a2, z3, a3, y) * (1 + np.random.randn() * noise)
+        j_b1 = jacobian_biases_1st_layer(x, a0, z1, a1, z2, a2, z3, a3, y) * (1 + np.random.randn() * noise)
+        j_b2 = jacobian_biases_2nd_layer(x, a0, z1, a1, z2, a2, z3, a3, y) * (1 + np.random.randn() * noise)
+        j_b3 = jacobian_biases_3rd_layer(x, a0, z1, a1, z2, a2, z3, a3, y) * (1 + np.random.randn() * noise)
 
         W1 = W1 - j_W1 * aggression
         W2 = W2 - j_W2 * aggression
@@ -221,8 +204,8 @@ def plot_training(x, y, iterations=10000, aggression=3.5, noise=1):
         b2 = b2 - j_b2 * aggression
         b3 = b3 - j_b3 * aggression
 
+        nf = a3
         if iterations % 1000 == 0:
-            nf = network_function(x)[-1]
             ax.plot(nf[0], nf[1], lw=2, color="magenta", alpha=0.1)
             print(f"Iter: {iterations} ; Cost: {cost(x, y)}")
         iterations -= 1
@@ -239,8 +222,14 @@ plot_training(x_input, y_output, iterations=10000, aggression=7, noise=1)
 reset_network(n1=6, n2=7)
 plot_training(x_input, y_output, iterations=25000, aggression=7, noise=1)
 
+reset_network(n1=6, n2=7)
+plot_training(x_input, y_output, iterations=50000, aggression=7, noise=1)
+
 reset_network(n1=50, n2=50)
 plot_training(x_input, y_output, iterations=10000, aggression=3.5, noise=1)
 
 reset_network(n1=50, n2=50)
 plot_training(x_input, y_output, iterations=25000, aggression=3.5, noise=1)
+
+reset_network(n1=50, n2=50)
+plot_training(x_input, y_output, iterations=50000, aggression=3.5, noise=1)
