@@ -95,27 +95,43 @@ def jacobian_biases_3rd_layer(x, y):
     return np.sum(J, axis=1, keepdims=True) / x.size
 
 
-def J_W2(x, y):
-    # The first two lines are identical to in J_W3.
+def jacobian_weights_2nd_layer(x, y):
+    # First get all the activations and weighted sums at each layer of the network.
     a0, z1, a1, z2, a2, z3, a3 = network_function(x)
-    J = 2 * (a3 - y)
-    # the next two lines implement da3/da2, first σ' and then W3.
-    J = J * d_sigma(z3)
-    J = (J.T @ W3).T
-    # then the final lines are the same as in J_W3 but with the layer number bumped down.
-    J = J * d_sigma(z2)
-    J = J @ a1.T / x.size
-    return J
+
+    # Calculate partial derivatives for the third layer:
+    # dC/dW2 = dC/da3 * da3/dz3 * dz3/da2 * da2/dz2 * dz2/dW2
+    dc_da3 = 2 * (a3 - y)
+    da3_dz3 = d_sigma(z3)
+    dz3_da2 = W3
+    da2_dz2 = d_sigma(z2)
+    dz2_dW2 = a1
+
+    # Jacobian by chain rule.
+    J = (((dc_da3 * da3_dz3).T @ dz3_da2).T * da2_dz2) @ dz2_dW2.T
+
+    # Average over all training examples.
+    return J / x.size
 
 
-def J_b2(x, y):
+def jacobian_bases_2nd_layer(x, y):
+    # First get all the activations and weighted sums at each layer of the network.
     a0, z1, a1, z2, a2, z3, a3 = network_function(x)
-    J = 2 * (a3 - y)
-    J = J * d_sigma(z3)
-    J = (J.T @ W3).T
-    J = J * d_sigma(z2)
-    J = np.sum(J, axis=1, keepdims=True) / x.size
-    return J
+
+    # Calculate partial derivatives for the third layer:
+    # dC/db2 = dC/da3 * da3/dz3 * dz3/da2 * da2/dz2 * dz2/db2
+    dc_da3 = 2 * (a3 - y)
+    da3_dz3 = d_sigma(z3)
+    dz3_da2 = W3
+    da2_dz2 = d_sigma(z2)
+    dz2_db2 = 1
+
+    # Jacobian by chain rule.
+    J = ((dc_da3 * da3_dz3).T @ dz3_da2).T * da2_dz2 * dz2_db2
+
+    # Average over all training examples. Because the output of J is not a dot-product
+    # we need to sum over all components of J.
+    return np.sum(J, axis=1, keepdims=True) / x.size
 
 
 def J_W1(x, y):
@@ -173,10 +189,10 @@ def plot_training(x, y, iterations=10000, aggression=3.5, noise=1):
 
     while iterations >= 0:
         j_W1 = J_W1(x, y) * (1 + np.random.randn() * noise)
-        j_W2 = J_W2(x, y) * (1 + np.random.randn() * noise)
+        j_W2 = jacobian_weights_2nd_layer(x, y) * (1 + np.random.randn() * noise)
         j_W3 = jacobian_weights_3rd_layer(x, y) * (1 + np.random.randn() * noise)
         j_b1 = J_b1(x, y) * (1 + np.random.randn() * noise)
-        j_b2 = J_b2(x, y) * (1 + np.random.randn() * noise)
+        j_b2 = jacobian_bases_2nd_layer(x, y) * (1 + np.random.randn() * noise)
         j_b3 = jacobian_biases_3rd_layer(x, y) * (1 + np.random.randn() * noise)
 
         W1 = W1 - j_W1 * aggression
