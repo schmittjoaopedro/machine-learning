@@ -31,6 +31,7 @@ def d_sigma(z):
 # n1 and n2 are the number of neurons in the first and second hidden layers.
 def reset_network(n1=6, n2=7, random=np.random):
     global W1, W2, W3, b1, b2, b3
+    # random.randn(N, M), where NxM, N = rows, M = columns
     W1 = random.randn(n1, 1) / 2
     W2 = random.randn(n2, n1) / 2
     W3 = random.randn(2, n2) / 2
@@ -58,20 +59,22 @@ def cost(x, y):
 
 # Backpropagation functions.
 # Each function calculates the Jacobian gradient of the cost function with respect to a weight or bias.
-def J_W3(x, y):
+
+def jacobian_weights_3rd_layer(x, y):
     # First get all the activations and weighted sums at each layer of the network.
     a0, z1, a1, z2, a2, z3, a3 = network_function(x)
-    # We'll use the variable J to store parts of our result as we go along, updating it in each line.
-    # Firstly, we calculate dC/da3, using the expressions above.
-    J = 2 * (a3 - y)
-    # Next multiply the result we've calculated by the derivative of sigma, evaluated at z3.
-    J = J * d_sigma(z3)
-    # Then we take the dot product (along the axis that holds the training examples) with the final partial derivative,
-    # i.e. dz3/dW3 = a2
-    # and divide by the number of training examples, for the average over all training examples.
-    J = J @ a2.T / x.size
-    # Finally return the result out of the function.
-    return J
+
+    # Calculate partial derivatives for the third layer:
+    # dC/dW3 = dC/da3 * da3/dz3 * dz3/dW3
+    dc_da3 = 2 * (a3 - y)
+    da3_dz3 = d_sigma(z3)
+    dz3_dW3 = a2
+
+    # Jacobian by chain rule.
+    J = (dc_da3 * da3_dz3) @ dz3_dW3.T
+
+    # Average over all training examples.
+    return J / x.size
 
 
 # In this function, you will implement the jacobian for the bias.
@@ -170,7 +173,7 @@ def plot_training(x, y, iterations=10000, aggression=3.5, noise=1):
     while iterations >= 0:
         j_W1 = J_W1(x, y) * (1 + np.random.randn() * noise)
         j_W2 = J_W2(x, y) * (1 + np.random.randn() * noise)
-        j_W3 = J_W3(x, y) * (1 + np.random.randn() * noise)
+        j_W3 = jacobian_weights_3rd_layer(x, y) * (1 + np.random.randn() * noise)
         j_b1 = J_b1(x, y) * (1 + np.random.randn() * noise)
         j_b2 = J_b2(x, y) * (1 + np.random.randn() * noise)
         j_b3 = J_b3(x, y) * (1 + np.random.randn() * noise)
