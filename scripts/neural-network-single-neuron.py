@@ -3,9 +3,9 @@
 import numpy as np
 
 # First we set the state of the network
-sigma = np.tanh
-w1 = -5
-b1 = 5
+sigma = np.tanh  # activation function
+w1 = -5  # weight
+b1 = 5  # bias
 
 
 # Then we define the neuron activation.
