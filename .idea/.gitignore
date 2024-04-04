@@ -14,3 +14,4 @@
 /vcs.xml
 # GitHub Copilot persisted chat sessions
 /copilot/chatSessions
+/other.xml
