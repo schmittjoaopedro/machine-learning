@@ -77,21 +77,22 @@ def jacobian_weights_3rd_layer(x, y):
     return J / x.size
 
 
-# In this function, you will implement the jacobian for the bias.
-# As you will see from the partial derivatives, only the last partial derivative is different.
-# The first two partial derivatives are the same as previously.
-def J_b3(x, y):
-    # As last time, we'll first set up the activations.
+def jacobian_biases_3rd_layer(x, y):
+    # First get all the activations and weighted sums at each layer of the network.
     a0, z1, a1, z2, a2, z3, a3 = network_function(x)
-    # Next you should implement the first two partial derivatives of the Jacobian.
-    # ===COPY TWO LINES FROM THE PREVIOUS FUNCTION TO SET UP THE FIRST TWO JACOBIAN TERMS===
-    J = 2 * (a3 - y)
-    J = J * d_sigma(z3)
-    # For the final line, we don't need to multiply by dz3/db3, because that is multiplying by 1.
-    # We still need to sum over all training examples however.
-    # There is no need to edit this line.
-    J = np.sum(J, axis=1, keepdims=True) / x.size
-    return J
+
+    # Calculate partial derivatives for the third layer:
+    # dC/db3 = dC/da3 * da3/dz3 * dz3/db3
+    dc_da3 = 2 * (a3 - y)
+    da3_dz3 = d_sigma(z3)
+    dz3_db3 = 1
+
+    # Jacobian by chain rule.
+    J = dc_da3 * da3_dz3 * dz3_db3
+
+    # Average over all training examples. Because the output of J is not a dot-product
+    # we need to sum over all components of J.
+    return np.sum(J, axis=1, keepdims=True) / x.size
 
 
 def J_W2(x, y):
@@ -176,7 +177,7 @@ def plot_training(x, y, iterations=10000, aggression=3.5, noise=1):
         j_W3 = jacobian_weights_3rd_layer(x, y) * (1 + np.random.randn() * noise)
         j_b1 = J_b1(x, y) * (1 + np.random.randn() * noise)
         j_b2 = J_b2(x, y) * (1 + np.random.randn() * noise)
-        j_b3 = J_b3(x, y) * (1 + np.random.randn() * noise)
+        j_b3 = jacobian_biases_3rd_layer(x, y) * (1 + np.random.randn() * noise)
 
         W1 = W1 - j_W1 * aggression
         W2 = W2 - j_W2 * aggression
