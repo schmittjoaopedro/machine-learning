@@ -2,9 +2,7 @@ import numpy as np
 import copy
 import matplotlib.pyplot as plt
 import h5py
-import scipy
 from PIL import Image
-from scipy import ndimage
 
 # Load cat vs non-cat dataset
 train_dataset = h5py.File('datasets/train_catvnoncat.h5', "r")
