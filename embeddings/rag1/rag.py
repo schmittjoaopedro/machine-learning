@@ -31,6 +31,8 @@ def calculate_similarity(query_emb, response_emb):
 try:
     dataset_df = pd.read_csv("movies.csv")
     dataset_df["embedding"] = dataset_df["embedding"].apply(eval)
+    # Ignore documents with empty embeddings
+    dataset_df = dataset_df[dataset_df["embedding"].apply(lambda x: bool(x))]
 except FileNotFoundError:
     dataset_df = pd.DataFrame()
 
@@ -63,14 +65,12 @@ if text:
             "distance": dist,
         })
 
-    # Sort the most similar documents for docs similarity
     docs_similarity = sorted(docs_similarity, key=lambda x: x["similarity"], reverse=True)
-
-    # Slice first 5 documents from docs_similarity
+    print("Top 5 most similar documents:")
     for idx, obj in enumerate(docs_similarity[:5]):
         print(f"Doc #{idx}, similarity: {obj['similarity']}, distance: {obj['distance']}")
         # Print fullplot text breaking lines after 80 columns
         print("Fullplot:")
-        lines = wrap(obj["fullplot"], 120)
+        lines = wrap(obj["fullplot"], 160)
         print("\n".join(lines))
         print()
