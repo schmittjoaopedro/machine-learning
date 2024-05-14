@@ -1,0 +1,7 @@
+datasets
+pandas
+sentence_transformers
+transformers
+numpy
+textwrap
+# accelerate # If using GPU
