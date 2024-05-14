@@ -35,7 +35,9 @@ print(dataset_df[["fullplot", "embedding"]].head())
 
 
 def similarity(query_embedding, text_embedding):
-    return np.dot(text_embedding, query_embedding) / (np.linalg.norm(text_embedding) * np.linalg.norm(query_embedding))
+    similarity = np.dot(text_embedding, query_embedding) / (np.linalg.norm(text_embedding) * np.linalg.norm(query_embedding))
+    distance = np.linalg.norm(np.array(query_embedding) - np.array(text_embedding))
+    return similarity, distance
 
 
 # Ask user for a search query
@@ -47,10 +49,11 @@ if text:
     docs_similarity = []
     for i, row in dataset_df.iterrows():
         text_embedding = row["embedding"]
-        sim = similarity(query_embedding, text_embedding)
+        sim, dist = similarity(query_embedding, text_embedding)
         docs_similarity.append({
             "fullplot": row["fullplot"],
-            "similarity": sim
+            "similarity": sim,
+            "distance": dist,
         })
 
     # Sort the most similar documents for docs similarity
@@ -58,7 +61,7 @@ if text:
 
     # Slice first 5 documents from docs_similarity
     for idx, obj in enumerate(docs_similarity[:5]):
-        print(f"Doc #{idx}, similarity: {obj['similarity']}")
+        print(f"Doc #{idx}, similarity: {obj['similarity']}, distance: {obj['distance']}")
         # Print fullplot text breaking lines after 80 columns
         print("Fullplot:")
         lines = wrap(obj["fullplot"], 120)
