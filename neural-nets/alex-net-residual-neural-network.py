@@ -4,6 +4,9 @@ import numpy as np
 import h5py
 from tensorflow.keras.initializers import random_uniform, glorot_uniform
 
+for device in tf.config.list_physical_devices():
+    print(device)
+
 
 def load_dataset():
     train_dataset = h5py.File('datasets/train_signs.h5', "r")
