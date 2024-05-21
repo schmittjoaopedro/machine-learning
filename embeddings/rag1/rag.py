@@ -49,28 +49,31 @@ if dataset_df.empty:
     # Save the dataset to a CSV file
     dataset_df.to_csv("movies.csv", index=False)
 
-# Ask user for a search query
-text = input("Search for movies: ")
-print()
-if text:
-    query_embedding = get_embedding(text)
+while True:
+    # Ask user for a search query
+    text = input("Search for movies: ")
+    print()
+    if text:
+        query_embedding = get_embedding(text)
+        if query_embedding == "stop":
+            break
 
-    docs_similarity = []
-    for i, row in dataset_df.iterrows():
-        text_embedding = row["embedding"]
-        sim, dist = calculate_similarity(query_embedding, text_embedding)
-        docs_similarity.append({
-            "fullplot": row["fullplot"],
-            "similarity": sim,
-            "distance": dist,
-        })
+        docs_similarity = []
+        for i, row in dataset_df.iterrows():
+            text_embedding = row["embedding"]
+            sim, dist = calculate_similarity(query_embedding, text_embedding)
+            docs_similarity.append({
+                "fullplot": row["fullplot"],
+                "similarity": sim,
+                "distance": dist,
+            })
 
-    docs_similarity = sorted(docs_similarity, key=lambda x: x["similarity"], reverse=True)
-    print("Top 5 most similar documents:")
-    for idx, obj in enumerate(docs_similarity[:5]):
-        print(f"Doc #{idx}, similarity: {obj['similarity']}, distance: {obj['distance']}")
-        # Print fullplot text breaking lines after 80 columns
-        print("Fullplot:")
-        lines = wrap(obj["fullplot"], 160)
-        print("\n".join(lines))
-        print()
+        docs_similarity = sorted(docs_similarity, key=lambda x: x["similarity"], reverse=True)
+        print("Top 5 most similar documents:")
+        for idx, obj in enumerate(docs_similarity[:5]):
+            print(f"Doc #{idx}, similarity: {obj['similarity']}, distance: {obj['distance']}")
+            # Print fullplot text breaking lines after 80 columns
+            print("Fullplot:")
+            lines = wrap(obj["fullplot"], 160)
+            print("\n".join(lines))
+            print()
