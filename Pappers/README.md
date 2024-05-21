@@ -1,7 +1,7 @@
 # To Read
 
 * [] **2013, Lee: Network in Network**
-* * [] **2013, Girshik: Rich feature hierarchies for accurate object detection and semantic segmentation**
+* [] **2013, Girshik: Rich feature hierarchies for accurate object detection and semantic segmentation**
 * [] **2014: Going Deeper with Convolutions (GooLeNet)**
 * [] **2014, Sermamet: OverFeat: Integrated Recognition, Localization and Detection using Convolutional Networks**
 * [] 2015, Szegedy: Rethinking the Inception Architecture for Computer Vision
