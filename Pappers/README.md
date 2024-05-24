@@ -2,12 +2,16 @@
 
 * [] **2013, Lee: Network in Network**
 * [] **2013, Girshik: Rich feature hierarchies for accurate object detection and semantic segmentation**
+* [] **2013, Zeiler: Visualizing and understanding convolutional networks**
 * [] **2014: Going Deeper with Convolutions (GooLeNet)**
 * [] **2014, Sermamet: OverFeat: Integrated Recognition, Localization and Detection using Convolutional Networks**
+* [] **2014, Taigman: DeepFace closing the gap to human level performance**
 * [] 2015, Szegedy: Rethinking the Inception Architecture for Computer Vision
 * [] **2015: Deep Residual Networks for Image Recognition**
 * [] **2015, Redmon: You Only Look Once: Unified, Real-Time Object Detection**
 * [] **2015, Ronneberger: U-Net: Convolutional Networks for Biomedical Image Segmentation**
+* [] **2015, Schroff: FaceNet: A unified embedding for face recognition and clustering**
+* [] **2015, Gatys: A neural algorithm of artistic style.**
 * [] 2016, Szegedy: Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning
 * [] 2016, Huang: Densely Connected Convolutional Networks
 * [] 2017, Xie: Aggregated Residual Transformations for Deep Neural Networks
