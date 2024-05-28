@@ -1,11 +1,14 @@
 # To Read
 
+* [] **1997, Hochreiter: Long short-term memory**
 * [] **2013, Lee: Network in Network**
 * [] **2013, Girshik: Rich feature hierarchies for accurate object detection and semantic segmentation**
 * [] **2013, Zeiler: Visualizing and understanding convolutional networks**
 * [] **2014: Going Deeper with Convolutions (GooLeNet)**
 * [] **2014, Sermamet: OverFeat: Integrated Recognition, Localization and Detection using Convolutional Networks**
 * [] **2014, Taigman: DeepFace closing the gap to human level performance**
+* [] **2014, Cho: On the properties of neural machine translation. Encoder-decoder approaches**
+* [] **2014, Chung: Empirical Evaluation of Gated Recurrent Neural Networks on Sequence Modelling**
 * [] 2015, Szegedy: Rethinking the Inception Architecture for Computer Vision
 * [] **2015: Deep Residual Networks for Image Recognition**
 * [] **2015, Redmon: You Only Look Once: Unified, Real-Time Object Detection**
