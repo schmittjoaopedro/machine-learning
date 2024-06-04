@@ -1,7 +1,9 @@
 # To Read
 
 * [] 1997, Hochreiter: Long short-term memory
+* [] 2002, Papineni: A method for automatic evaluation of machine translation
 * [] 2003, Bengio: A neural probabilistic language model
+* [] 2006, Graves: Connectionist temporal classification: labelling unsegmented sequence data with recurrent neural networks
 * [] 2008, Hinton: Visualizing data using t-SNE
 * [] 2013, Lee: Network in Network
 * [] 2013, Girshik: Rich feature hierarchies for accurate object detection and semantic segmentation
@@ -19,6 +21,8 @@
 * [] 2014, Cho: Learning phrase representations using RNN encoder-decoder for statistical machine translation
 * [] 2014, Mao: Deep captioning with multimodal recurrent neural networks
 * [] 2014, Vinyals: Show and tell Neural Image caption generator
+* [] 2014, Bahdanaeu: Neural machine translation by jointly learning to align and translate
+* [] 2015, Xu: Show, Attend and Tell: Neural Image Caption Generation with Visual Attention
 * [] 2015, Szegedy: Rethinking the Inception Architecture for Computer Vision
 * [] 2015: Deep Residual Networks for Image Recognition
 * [] 2015, Redmon: You Only Look Once: Unified, Real-Time Object Detection
