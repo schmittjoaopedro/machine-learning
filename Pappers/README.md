@@ -39,6 +39,7 @@
 * [] 2017, Howard: MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications
 * [] 2017, Novikov: Fully Convolutional Architectures for Multi-Class Segmentation in Chest Rediographs
 * [] 2017, Dong: Automatic Brain Tumor Detection and Segmentation Using U-Net Based Fully Convolutional Networks
+* [] 2017, Vaswani: Attention is All You Need
 * [] 2018, Woo: CBAM: Convolutional Block Attention Module
 * [] 2018, Woo: CBAM: Convolutional Block Attention Module
 * [] 2018, Zhang: Residual Attention Network for Image Classification
