@@ -46,3 +46,12 @@
 * [] 2019, Tan: EfficientNet, Rethinking Model Scoring for Convolutional Neural Networks
 * [] 2019, Sandler: MobileNetV2, Inverted Residuals and Linear Bottlenecks
 * [] 2020, Carion: End-to-End Object Detection with Transformers
+* [] 2020, Brown: Language Models are Few-Shot Learners
+* [] 2020, Kaplan: Scaling Laws for Neural Language Models
+* [] 2021, Hu: LoRA: Low-Rank Adaptation of Large Language Models
+* [] 2021, Lester: The Power of Scale for Parameter-Efficient Prompt Tuning
+* [] 2022, Hoffmann: Training Computer-Optimal Large Language Models
+* [] 2022, Won: Scaling Instruction-Finetuned Language Models
+* [] 2023, Touvron: LLaMA Open and Efficient Foundation Language Model
+* [] 2023, Wu: BloombergGPT A Large Language Model for Finance
+* [] 2023, Lialin: Scaling Down to Scale Up A Guide to Parameter-Efficient Fine-Tunning
