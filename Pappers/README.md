@@ -49,11 +49,15 @@
 * [] 2020, Brown: Language Models are Few-Shot Learners
 * [] 2020, Kaplan: Scaling Laws for Neural Language Models
 * [] 2020, Stiennon: Learning to summarize from human feedback
+* [] 2020, Lewis: Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks
 * [] 2021, Hu: LoRA: Low-Rank Adaptation of Large Language Models
 * [] 2021, Lester: The Power of Scale for Parameter-Efficient Prompt Tuning
 * [] 2022, Hoffmann: Training Computer-Optimal Large Language Models
 * [] 2022, Won: Scaling Instruction-Finetuned Language Models
 * [] 2022, Bai: Constitutional AI Harmlessness from AI Feedback
+* [] 2022, Wei: Chain-of-Thought Prompting Elicits Reasoning in Large Language Models
+* [] 2022, Gao: PAL Program-aided Language Models
+* [] 2022, Yao: ReAct Synergizing Reasoning and Acting in Language Models
 * [] 2023, Touvron: LLaMA Open and Efficient Foundation Language Model
 * [] 2023, Wu: BloombergGPT A Large Language Model for Finance
 * [] 2023, Lialin: Scaling Down to Scale Up A Guide to Parameter-Efficient Fine-Tunning
