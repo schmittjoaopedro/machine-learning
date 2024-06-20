@@ -14,7 +14,6 @@ block_size = 256  # what is the maximum context length for predictions
 max_iters = 5000
 eval_interval = 500
 learning_rate = 3e-4
-device = 'cuda' if torch.cuda.is_available() else 'cpu'
 eval_iters = 200
 n_embd = 384
 n_head = 6
@@ -23,6 +22,9 @@ dropout = 0.2
 # ----------------
 
 torch.manual_seed(1337)
+
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+print(f'Using {device}')
 
 if 'input.txt' not in os.listdir():
     url = 'https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt'
