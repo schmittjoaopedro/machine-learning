@@ -24,7 +24,7 @@
 * [] 2014, Bahdanaeu: Neural machine translation by jointly learning to align and translate
 * [] 2015, Xu: Show, Attend and Tell: Neural Image Caption Generation with Visual Attention
 * [] 2015, Szegedy: Rethinking the Inception Architecture for Computer Vision
-* [] 2015: Deep Residual Networks for Image Recognition
+* [x] 2015: Deep Residual Networks for Image Recognition
 * [] 2015, Redmon: You Only Look Once: Unified, Real-Time Object Detection
 * [] 2015, Ronneberger: U-Net: Convolutional Networks for Biomedical Image Segmentation
 * [] 2015, Schroff: FaceNet: A unified embedding for face recognition and clustering
