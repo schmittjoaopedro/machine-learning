@@ -11,7 +11,7 @@ cv2_ctx = {}
 def convert_image_to_jpg(img_path):
     img = Image.open(img_path)
     img = img.convert('RGB')
-    img = img.resize((640, 380))
+    img = img.resize((800, 420))
     img.save(img_path.replace('.png', '.jpg'))
     os.remove(img_path)
 
@@ -267,7 +267,7 @@ def input_labels_to_image(annotations_path, image_path):
 #split = 'train'
 split = 'val'
 image_id = input("Enter image id: ")
-option = input("What you want to do? (1: Convert image to jpg, 2: Input labels to image, 3: Plot first image): ")
+option = input("What you want to do? (1: Convert image to jpg, 2: Input labels to image, 3: Plot image): ")
 if option == '1':
     convert_image_to_jpg(f'data_web/{split}2017/{image_id}.png')
 elif option == '2':
