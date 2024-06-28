@@ -8,13 +8,17 @@ from pathlib import Path
 
 import numpy as np
 import torch
+from PIL import Image
 from torch.utils.data import DataLoader, DistributedSampler
+import torchvision.transforms as T
 
 import datasets
 import util.misc as utils
 from datasets import build_dataset, get_coco_api_from_dataset
 from engine import evaluate, train_one_epoch
 from models import build_model
+from util.box_ops import rescale_bboxes
+from util.plot_utils import plot_results
 
 
 def get_args_parser():
@@ -99,6 +103,12 @@ def get_args_parser():
     parser.add_argument('--world_size', default=1, type=int,
                         help='number of distributed processes')
     parser.add_argument('--dist_url', default='env://', help='url used to set up distributed training')
+
+    # inference parameters
+    parser.add_argument('--inference_image_path', type=str, help='path to image to be inferred')
+    parser.add_argument('--weights_path', type=str, help='path to weights')
+    parser.add_argument('--inference_annotations_file', type=str, help='path to classes file')
+
     return parser
 
 
@@ -120,6 +130,41 @@ def main(args):
 
     model, criterion, postprocessors = build_model(args)
     model.to(device)
+
+    if args.inference_image_path and args.weights_path:
+        # Load model from pre-trained weights
+        model.load_state_dict(torch.load(args.weights_path, map_location=device)['model'])
+        model.eval()
+
+        # Load classes
+        annotations_obj = json.load(open(args.inference_annotations_file))
+        classes = annotations_obj['categories']
+        classes.sort(key=lambda x: x['id'])
+        classes = [c['name'] for c in classes]
+
+        # Load and pre-process image
+        transform = T.Compose([
+            T.Resize(800),
+            T.ToTensor(),
+            T.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+        ])
+        image = Image.open(args.inference_image_path)
+        image_tensor = transform(image).unsqueeze(0).to(device)
+
+        # Perform inference
+        outputs = model(image_tensor)
+
+        # keep only predictions with 0.7+ confidence
+        probas = outputs['pred_logits'].softmax(-1)[0, :, :-1]
+        keep = probas.max(-1).values > 0.7
+
+        # convert boxes from [0; 1] to image scales
+        bboxes_scaled = rescale_bboxes(outputs['pred_boxes'][0, keep], image.size)
+
+        scores, boxes = probas[keep], bboxes_scaled
+        plot_results(image, scores, boxes, classes)
+
+        return
 
     model_without_ddp = model
     if args.distributed:

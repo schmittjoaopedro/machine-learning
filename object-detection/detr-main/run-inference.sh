@@ -1,0 +1,11 @@
+python main.py \
+  --backbone resnet18 \
+  --enc_layers 2 \
+  --dec_layers 2 \
+  --hidden_dim 16 \
+  --nheads 2 \
+  --num_queries 5 \
+  --device cpu \
+  --inference_image_path ./datasets/data_web/val2017/000000000005.jpg \
+  --weights_path ./output/checkpoint.pth \
+  --inference_annotations_file ./datasets/data_web/annotations/instances_val2017.json
