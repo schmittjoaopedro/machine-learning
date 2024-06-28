@@ -5,6 +5,7 @@ python main.py \
   --hidden_dim 16 \
   --nheads 2 \
   --num_queries 5 \
-  --device cpu \
+  --device cuda \
+  --epochs 5 \
   --coco_path ./datasets/data/ \
   --output_dir ./output/
