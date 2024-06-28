@@ -1,12 +1,15 @@
 python main.py \
   --backbone resnet18 \
-  --enc_layers 2 \
-  --dec_layers 2 \
-  --hidden_dim 16 \
-  --nheads 2 \
-  --num_queries 5 \
+  --enc_layers 6 \
+  --dec_layers 6 \
+  --hidden_dim 128 \
+  --nheads 8 \
+  --num_queries 30 \
   --device cuda \
-  --epochs 300 \
+  --lr 0.0001 \
+  --lr_backbone 0.0001 \
+  --epochs 3000 \
+  --lr_drop 2000 \
   --dataset_file web \
   --coco_path ./datasets/data_web/ \
   --output_dir ./output_web/

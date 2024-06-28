@@ -119,6 +119,7 @@ def plot_results(pil_img, prob, boxes, classes):
                                    fill=False, color=c, linewidth=3))
         cl = p.argmax()
         text = f'{classes[cl]}: {p[cl]:0.2f}'
+        print(f'Class {text}, BBox: [{xmin}, {ymin}, {xmax}, {ymax}]')
         ax.text(xmin, ymin, text, fontsize=15,
                 bbox=dict(facecolor='yellow', alpha=0.5))
     plt.axis('off')

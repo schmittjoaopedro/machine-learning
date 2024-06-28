@@ -318,7 +318,7 @@ def build(args):
         num_classes = 250
     elif args.dataset_file == 'web':
         # 21 web components + 1 for not an object class
-        num_classes = 22
+        num_classes = 28
     else:
         num_classes = 20
     device = torch.device(args.device)

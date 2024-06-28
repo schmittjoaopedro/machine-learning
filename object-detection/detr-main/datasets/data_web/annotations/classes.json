@@ -12,7 +12,7 @@
   "menu",
   "paginator",
   "progress",
-  "radio",
+  "radio_button",
   "table",
   "video",
   "image",
@@ -20,5 +20,11 @@
   "text_title",
   "tab",
   "scroll",
-  "link"
+  "link",
+  "vertical_card",
+  "horizontal_card",
+  "controls",
+  "post",
+  "notification",
+  "selector"
 ]
