@@ -137,10 +137,7 @@ def main(args):
         model.eval()
 
         # Load classes
-        annotations_obj = json.load(open(args.inference_annotations_file))
-        classes = annotations_obj['categories']
-        classes.sort(key=lambda x: x['id'])
-        classes = [c['name'] for c in classes]
+        classes = json.load(open(args.inference_annotations_file))
 
         # Load and pre-process image
         transform = T.Compose([
@@ -156,10 +153,10 @@ def main(args):
 
         # keep only predictions with 0.7+ confidence
         probas = outputs['pred_logits'].softmax(-1)[0, :, :-1]
-        keep = probas.max(-1).values > 0.7
+        keep = probas.max(-1).values > 0.5
 
         # convert boxes from [0; 1] to image scales
-        bboxes_scaled = rescale_bboxes(outputs['pred_boxes'][0, keep], image.size)
+        bboxes_scaled = rescale_bboxes(outputs['pred_boxes'][0, keep], image.size, device)
 
         scores, boxes = probas[keep], bboxes_scaled
         plot_results(image, scores, boxes, classes)

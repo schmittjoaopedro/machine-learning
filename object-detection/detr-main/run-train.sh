@@ -5,7 +5,8 @@ python main.py \
   --hidden_dim 16 \
   --nheads 2 \
   --num_queries 5 \
-  --device cpu \
+  --device cuda \
   --epochs 300 \
+  --dataset_file web \
   --coco_path ./datasets/data_web/ \
   --output_dir ./output_web/
