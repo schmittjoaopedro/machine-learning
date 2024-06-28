@@ -6,5 +6,6 @@ python main.py \
   --nheads 2 \
   --num_queries 5 \
   --device cpu \
-  --coco_path ./datasets/data/ \
-  --output_dir ./output/
+  --epochs 300 \
+  --coco_path ./datasets/data_web/ \
+  --output_dir ./output_web/
