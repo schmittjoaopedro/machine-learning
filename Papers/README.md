@@ -1,6 +1,7 @@
 # To Read
 
 * [] 1997, Hochreiter: Long short-term memory
+* [] 1997, LeCun: Gradient Based Learning Applied to Document Recognition
 * [] 2002, Papineni: A method for automatic evaluation of machine translation
 * [] 2003, Bengio: A neural probabilistic language model
 * [] 2006, Graves: Connectionist temporal classification: labelling unsegmented sequence data with recurrent neural networks
